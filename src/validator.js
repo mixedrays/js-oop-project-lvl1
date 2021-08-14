@@ -1,11 +1,34 @@
 class Validator {
-  constructor() {
-    console.log('constructor');
-  }
+  string() { // eslint-disable-line
+    return {
+      isRequired: false,
+      containedValue: '',
 
-  string() {
-    console.log(this);
-    return {};
+      required(flag = true) {
+        this.isRequired = flag;
+      },
+
+      contains(value) {
+        this.containedValue = value;
+        return this;
+      },
+
+      isValid(value) {
+        if (value === null) {
+          return false;
+        }
+
+        if (this.isRequired && !value) {
+          return false;
+        }
+
+        if (this.containedValue) {
+          return value.includes(this.containedValue);
+        }
+
+        return true;
+      },
+    };
   }
 }
 

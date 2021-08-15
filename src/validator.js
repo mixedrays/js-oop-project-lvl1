@@ -30,6 +30,47 @@ class Validator {
       },
     };
   }
+
+  number() { // eslint-disable-line
+    return {
+      isRequired: false,
+      isPositive: false,
+      start: null,
+      end: null,
+
+      required(flag = true) {
+        this.isRequired = flag;
+        return this;
+      },
+
+      positive(flag = true) {
+        this.isPositive = flag;
+        return this;
+      },
+
+      range(start, end) {
+        this.start = start;
+        this.end = end;
+        return this;
+      },
+
+      isValid(value) {
+        if (this.isRequired && !value) {
+          return false;
+        }
+
+        if (this.isPositive && value < 0) {
+          return false;
+        }
+
+        if (this.start !== null && this.end !== null && (value < this.start || value > this.end)) {
+          return false;
+        }
+
+        return true;
+      },
+    };
+  }
 }
 
 export default Validator;

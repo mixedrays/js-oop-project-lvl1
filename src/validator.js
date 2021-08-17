@@ -71,6 +71,39 @@ class Validator {
       },
     };
   }
+
+  array() { // eslint-disable-line
+    return {
+      isRequired: false,
+      size: undefined,
+
+      required(flag = true) {
+        this.isRequired = flag;
+        return this;
+      },
+
+      sizeof(size) {
+        this.size = size;
+        return this;
+      },
+
+      isValid(value) {
+        if (!value || !Array.isArray(value)) {
+          return false;
+        }
+
+        if (this.isRequired && !value) {
+          return false;
+        }
+
+        if (this.size !== undefined && this.size !== value.length) {
+          return false;
+        }
+
+        return true;
+      },
+    };
+  }
 }
 
 export default Validator;

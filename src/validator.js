@@ -6,6 +6,7 @@ class Validator {
 
       required(flag = true) {
         this.isRequired = flag;
+        return this;
       },
 
       contains(value) {
@@ -98,6 +99,30 @@ class Validator {
 
         if (this.size !== undefined && this.size !== value.length) {
           return false;
+        }
+
+        return true;
+      },
+    };
+  }
+
+  object() { // eslint-disable-line
+    return {
+      isRequired: false,
+      valueShape: null,
+
+      shape(shape) {
+        this.valueShape = shape;
+        return this;
+      },
+
+      isValid(value) {
+        if (this.valueShape) {
+          const validations = Object.entries(value)
+            .map(([k, v]) => this.valueShape[k].isValid(v))
+            .filter((v) => !v);
+
+          return validations.length === 0;
         }
 
         return true;

@@ -1,7 +1,7 @@
 export default class BaseSchema {
-  static customValidators = {}
-
-  validators = {};
+  constructor() {
+    this.validators = {};
+  }
 
   addValidator(name, fn) {
     this.validators[name] = fn;
@@ -22,3 +22,5 @@ export default class BaseSchema {
     return Object.values(this.validators).every((fn) => fn(value));
   }
 }
+
+BaseSchema.customValidators = {};

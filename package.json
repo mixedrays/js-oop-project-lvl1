@@ -9,7 +9,8 @@
     "node": ">=14"
   },
   "scripts": {
-    "test": "npx jest --bail"
+    "test": "npx jest --bail",
+    "test:w": "npx jest --watch"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@jest/globals": "^27.0.1",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^27.0.6",
     "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",

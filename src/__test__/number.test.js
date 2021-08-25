@@ -1,7 +1,7 @@
 import {
   beforeEach, describe, it, expect,
 } from '@jest/globals';
-import Validator from './validator';
+import Validator from '../validator';
 
 describe('Validator string() schema', () => {
   let schema;
@@ -16,7 +16,7 @@ describe('Validator string() schema', () => {
     expect(schema.required().isValid(null)).toBeFalsy();
   });
 
-  it('checks required empty number', () => {
+  it('checks required undefined number', () => {
     expect(schema.isValid()).toBeTruthy();
     expect(schema.required().isValid()).toBeFalsy();
   });

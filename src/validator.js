@@ -1,133 +1,44 @@
+import StringSchema from './StringSchema';
+import NumberSchema from './NumberSchema';
+import ArraySchema from './ArraySchema';
+import ObjectSchema from './ObjectSchema';
+
 class Validator {
-  string() { // eslint-disable-line
-    return {
-      isRequired: false,
-      containedValue: '',
+  addValidator(type, name, fn) {
+    switch (type) {
+      case 'string':
+        StringSchema.customValidators[name] = fn;
+        break;
+      case 'number':
+        NumberSchema.customValidators[name] = fn;
+        break;
+      case 'array':
+        ArraySchema.customValidators[name] = fn;
+        break;
+      case 'object':
+        ObjectSchema.customValidators[name] = fn;
+        break;
+      default:
+        throw new Error('Unsupported validator type.');
+    }
 
-      required(flag = true) {
-        this.isRequired = flag;
-        return this;
-      },
-
-      contains(value) {
-        this.containedValue = value;
-        return this;
-      },
-
-      isValid(value) {
-        if (value === null) {
-          return false;
-        }
-
-        if (this.isRequired && !value) {
-          return false;
-        }
-
-        if (this.containedValue) {
-          return value.includes(this.containedValue);
-        }
-
-        return true;
-      },
-    };
+    return this;
   }
 
-  number() { // eslint-disable-line
-    return {
-      isRequired: false,
-      isPositive: false,
-      start: null,
-      end: null,
-
-      required(flag = true) {
-        this.isRequired = flag;
-        return this;
-      },
-
-      positive(flag = true) {
-        this.isPositive = flag;
-        return this;
-      },
-
-      range(start, end) {
-        this.start = start;
-        this.end = end;
-        return this;
-      },
-
-      isValid(value) {
-        if (this.isRequired && !value) {
-          return false;
-        }
-
-        if (this.isPositive && value < 0) {
-          return false;
-        }
-
-        if (this.start !== null && this.end !== null && (value < this.start || value > this.end)) {
-          return false;
-        }
-
-        return true;
-      },
-    };
+  string() {
+    return new StringSchema(this);
   }
 
-  array() { // eslint-disable-line
-    return {
-      isRequired: false,
-      size: undefined,
-
-      required(flag = true) {
-        this.isRequired = flag;
-        return this;
-      },
-
-      sizeof(size) {
-        this.size = size;
-        return this;
-      },
-
-      isValid(value) {
-        if (!value || !Array.isArray(value)) {
-          return false;
-        }
-
-        if (this.isRequired && !value) {
-          return false;
-        }
-
-        if (this.size !== undefined && this.size !== value.length) {
-          return false;
-        }
-
-        return true;
-      },
-    };
+  number() {
+    return new NumberSchema(this);
   }
 
-  object() { // eslint-disable-line
-    return {
-      isRequired: false,
-      valueShape: null,
+  array() {
+    return new ArraySchema(this);
+  }
 
-      shape(shape) {
-        this.valueShape = shape;
-        return this;
-      },
-
-      isValid(value) {
-        if (this.valueShape) {
-          const validations = Object.entries(value)
-            .map(([k, v]) => this.valueShape[k].isValid(v))
-            .filter((v) => !v);
-
-          return validations.length === 0;
-        }
-
-        return true;
-      },
-    };
+  object() {
+    return new ObjectSchema(this);
   }
 }
 

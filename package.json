@@ -2,9 +2,7 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "Hexlet project",
-  "bin": {
-    "nodejs-package": "bin/nodejs-package.js"
-  },
+  "main": "./index.js",
   "engines": {
     "node": ">=14"
   },

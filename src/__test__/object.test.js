@@ -18,9 +18,14 @@ describe('Validator array() schema', () => {
       age: v.number().positive(),
     });
 
-    expect(schema.isValid({ name: 'kolya', age: 100 })).toBeTruthy(); // true
-    expect(schema.isValid({ name: 'maya', age: null })).toBeTruthy(); // true
-    expect(schema.isValid({ name: '', age: null })).toBeFalsy(); // false
-    expect(schema.isValid({ name: 'ada', age: -5 })).toBeFalsy(); // false
+    expect(schema.isValid({ name: 'kolya', age: 100 })).toBeTruthy();
+    expect(schema.isValid({ name: 'maya', age: null })).toBeTruthy();
+    expect(schema.isValid({ name: '', age: null })).toBeFalsy();
+    expect(schema.isValid({ name: 'ada', age: -5 })).toBeFalsy();
+  });
+
+  it('checks schema for null and empty object', () => {
+    expect(schema.isValid(null)).toBeTruthy();
+    expect(schema.isValid({})).toBeTruthy();
   });
 });

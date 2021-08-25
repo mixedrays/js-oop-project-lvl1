@@ -6,4 +6,12 @@ export default class ObjectSchema extends BaseSchema {
     this.addValidator('shape', shape(validationShape));
     return this;
   }
+
+  isValid(value) {
+    if (!this.validators.required && (value === null)) {
+      return true;
+    }
+
+    return super.isValid(value);
+  }
 }

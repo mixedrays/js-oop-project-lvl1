@@ -1,5 +1,6 @@
 export default class BaseSchema {
-  constructor() {
+  constructor(validator) {
+    this.validator = validator;
     this.validators = {};
   }
 
